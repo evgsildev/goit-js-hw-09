@@ -4,6 +4,8 @@ const refs = {
   stopButton: document.querySelector('[data-stop]'),
 };
 
+let timerId = null;
+
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
@@ -12,7 +14,7 @@ function setColor() {
   refs.body.style.backgroundColor = getRandomHexColor();
 }
 
-let timerId;
+refs.stopButton.setAttribute('disabled', 'disabled');
 
 refs.startButton.addEventListener('click', () => {
   refs.startButton.setAttribute('disabled', 'disabled');
