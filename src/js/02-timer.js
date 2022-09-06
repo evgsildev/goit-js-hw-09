@@ -13,8 +13,6 @@ const refs = {
   dataSeconds: document.querySelector('[data-seconds]'),
 };
 
-const date = new Date(); // Отримуємо наш поточний час
-
 let chosenTime;
 
 const options = {
@@ -23,9 +21,11 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (selectedDates[0].getTime() > date.getTime()) {
+    if (selectedDates[0] > Date.now()) {
       refs.startBtn.disabled = false;
-      chosenTime = selectedDates[0].getTime();
+      refs.dateInput.disabled = false;
+
+      chosenTime = selectedDates[0];
       return chosenTime;
     } else {
       Notify.failure('Please choose a date in the future');
@@ -39,6 +39,7 @@ refs.startBtn.disabled = true;
 
 refs.startBtn.addEventListener('click', () => {
   refs.startBtn.disabled = true;
+  refs.dateInput.disabled = true;
 
   setInterval(() => {
     const currentTime = Date.now();
@@ -50,6 +51,7 @@ refs.startBtn.addEventListener('click', () => {
       refs.dataMinutes.innerHTML = countingTime.minutes;
       refs.dataSeconds.innerHTML = countingTime.seconds;
     } else {
+      refs.dateInput.disabled = false;
       return;
     }
   }, 1000);
